@@ -1,7 +1,29 @@
 const express = require("express");
+const mysql = require("mysql");
+const myconn = require("express-myconnection");
 
 const app = express();
 app.set("port", process.env.PORT || 9000);
+const dbOptions = {
+  host: "nuevalocal",
+  port: "127.0.0:1:3306",
+  usuario: "root",
+  password: "password",
+  database: "libreria",
+};
+
+/////////////////////////////////////////////////////////
+// MIDDLEWARES /////////////
+/////////////////////////////////////////////////////////
+app.use(myconn(mysql, dbOptions, "single"));
+
+/////////////////////////////////////////////////////////
+// SERVER RUNNING /////////////
+/////////////////////////////////////////////////////////
+
+app.listen(app.get("port"), () => {
+  console.log("server runnig on port 9000!!!!!!!!!", app.get("port"));
+});
 
 /////////////////////////////////////////////////////////
 // PRIMER RUTA /////////////
@@ -10,6 +32,4 @@ app.set("port", process.env.PORT || 9000);
 app.get("/", (req, res) => {
   res.send("Welcome to my API!!!!!!!");
 });
-app.listen(app.get("port"), () => {
-  console.log("server runnig on port 9000!!!!!!!!!", app.get("port"));
-});
+/////////////////////////////////////////////////////////
